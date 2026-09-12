@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UTワークフロー改善提案 | CI/CD検討</title>
+  <style>
+    :root {
+      --bg: #f5f6f4;
+      --card: #ffffff;
+      --ink: #262b33;
+      --muted: #667085;
+      --line: #dfe3e8;
+      --accent: #3454a8;
+      --accent-soft: #eef1f9;
+      --hero-bg: #26313d;
+      --shadow: 0 8px 24px rgba(38, 43, 51, 0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Apple SD Gothic Neo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
+    header.hero {
+      background: var(--hero-bg);
+      color: #f3f5f7;
+      border-radius: 18px;
+      padding: 32px 32px 28px;
+      box-shadow: var(--shadow);
+    }
+    header.hero p.meta { opacity: .72; margin: 0 0 10px; font-size: 14px; }
+    header.hero h1 { margin: 0 0 10px; font-size: 25px; letter-spacing: .01em; font-weight: 700; }
+    header.hero .lead { margin: 0; max-width: 640px; opacity: .88; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+    a.card {
+      display: block;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 22px 20px;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    a.card:hover { border-color: #cfd8ee; transform: translateY(-1px); }
+    a.card .lang {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-radius: 999px;
+      padding: 4px 10px;
+      margin-bottom: 10px;
+    }
+    a.card strong { display: block; font-size: 18px; margin-bottom: 6px; }
+    a.card p { margin: 0; font-size: 14px; color: var(--muted); }
+    @media (max-width: 640px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      header.hero { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <p class="meta">Unit Test workflow / CI/CD</p>
+      <h1>UTワークフロー改善提案</h1>
+      <p class="lead">言語を選んで提案資料を開いてください。</p>
+    </header>
+    <div class="grid-2">
+      <a class="card" href="ut-cicd-proposal-jp.html">
+        <span class="lang">日本語</span>
+        <strong>日本向け提案</strong>
+        <p>UTワークフロー改善提案 | CI/CD検討</p>
+      </a>
+      <a class="card" href="ut-cicd-proposal-kr.html">
+        <span class="lang">한국어</span>
+        <strong>한국향 제안</strong>
+        <p>UT 워크플로우 개선 제안 | CI/CD 검토</p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
