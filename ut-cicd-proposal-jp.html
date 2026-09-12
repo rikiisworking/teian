@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UTワークフロー改善提案 | CI/CD検討</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg: #f5f6f4;
+      --card: #ffffff;
+      --ink: #262b33;
+      --muted: #667085;
+      --line: #dfe3e8;
+      --asis: #b45309;
+      --asis-soft: #fbf3ea;
+      --tobe: #0f766e;
+      --tobe-soft: #eef8f6;
+      --accent: #3454a8;
+      --accent-soft: #eef1f9;
+      --warn: #92400e;
+      --warn-soft: #fdf4e8;
+      --good: #166534;
+      --hero-bg: #26313d;
+      --shadow: 0 8px 24px rgba(38, 43, 51, 0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 32px 20px 64px; }
+    header.hero {
+      background: var(--hero-bg);
+      color: #f3f5f7;
+      border-radius: 18px;
+      padding: 32px 32px 28px;
+      box-shadow: var(--shadow);
+    }
+    header.hero p.meta { opacity: .72; margin: 0 0 10px; font-size: 14px; }
+    header.hero h1 { margin: 0 0 10px; font-size: 25px; letter-spacing: .01em; font-weight: 700; }
+    header.hero .lead { margin: 0; max-width: 760px; opacity: .88; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .chip {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    /* 배경/TOC */
+    .context {
+      margin-top: 18px;
+      background: var(--accent-soft);
+      border: 1px solid #cfd8ee;
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+    .context strong { color: var(--accent); font-size: 13px; display: block; margin-bottom: 6px; }
+    .context ul { margin: 0; padding-left: 18px; font-size: 14px; color: #3a3f47; }
+    .context li + li { margin-top: 4px; }
+
+    nav.toc {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    nav.toc a {
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 7px 12px;
+      border-radius: 999px;
+      transition: background .15s ease;
+    }
+    nav.toc a:hover { background: #eef0f2; }
+
+    section { margin-top: 30px; scroll-margin-top: 16px; }
+    h2 {
+      font-size: 20px;
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .num {
+      width: 28px; height: 28px; border-radius: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #e7eaf3; color: var(--accent); font-size: 13px; font-weight: 700;
+      flex: none;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+    /* 통계 스트립 */
+    .stat-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .stat-card {
+      background: var(--tobe-soft);
+      border: 1px solid #bfe6df;
+      border-radius: 14px;
+      padding: 16px 18px;
+      text-align: center;
+    }
+    .stat-card .label { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+    .stat-card .value { font-size: 20px; font-weight: 700; color: var(--ink); }
+    .stat-card .value .from { color: #94a3af; font-weight: 500; text-decoration: line-through; text-decoration-color: #c2c9d1; }
+    .stat-card .value .arrow { margin: 0 8px; color: var(--tobe); }
+    .stat-card .value .to { color: var(--tobe); }
+
+    .pain {
+      background: var(--asis-soft);
+      border: 1px solid #f2dcc4;
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+    }
+    .pain strong { display: block; color: var(--asis); margin-bottom: 4px; font-size: 14px; }
+    .pain p { margin: 0; font-size: 13px; color: #6b4a26; }
+    .gain {
+      background: var(--tobe-soft);
+      border: 1px solid #bfe6df;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .gain strong { display: block; color: var(--tobe); margin-bottom: 4px; font-size: 14px; }
+    .gain p { margin: 0; font-size: 13px; color: #164e45; }
+
+    .risk {
+      background: var(--warn-soft);
+      border: 1px solid #f0dcb8;
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+    }
+    .risk strong { display: block; color: var(--warn); margin-bottom: 4px; font-size: 14px; }
+    .risk p { margin: 0; font-size: 13px; color: #5f4315; }
+
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .step + .step { margin-top: 10px; }
+    .step .step-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--accent); color: #fff; font-size: 13px; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center; flex: none;
+    }
+    .step strong { display: block; font-size: 14px; margin-bottom: 3px; }
+    .step p { margin: 0; font-size: 13px; color: var(--muted); }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .vs {
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #8b95a3; writing-mode: vertical-rl;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+    .badge.red { background: #f6e4d0; color: #8a4a15; }
+    .badge.green { background: #d7f0ea; color: #0d5f56; }
+
+    .mermaid { background: #fff; border-radius: 12px; padding: 8px 4px; overflow-x: auto; }
+    .mermaid svg { max-width: 100%; height: auto; }
+
+    .formula {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: #26313d;
+      color: #e7ebee;
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: center;
+      letter-spacing: .02em;
+    }
+    .formula span { color: #6fc9bb; }
+    .note { color: var(--muted); font-size: 13px; margin-top: 10px; }
+    .highlight { background: #fdf1c9; padding: 1px 5px; border-radius: 4px; }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 1100px) {
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+      .stat-strip { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .grid-2, .compare { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: 1fr; }
+      .vs { writing-mode: horizontal-tb; padding: 6px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <p class="meta">Ubicom Holdings · Park · UT改善提案</p>
+      <h1>UTを「人がつなぐ手順」から<br>「コードを上げれば自動で回る流れ」へ</h1>
+      <p class="lead">現状のUTは、資料ダウンロードからSQL作成、Glue実行、レポートまで人手でつなぎます。CI/CDを検討すれば、同じ検証をPRの時点で自動化できます。</p>
+      <div class="chips">
+        <span class="chip">リードタイム短縮</span>
+        <span class="chip">ヒューマンエラー低減</span>
+        <span class="chip">リーダー負荷の分散</span>
+        <span class="chip">お客様へのフィードバック高速化</span>
+      </div>
+    </header>
+
+    <div class="context">
+      <strong>なぜ今、この提案か</strong>
+      <ul>
+        <li>今回のUTスケジュールのために週末作業を行う中で、もっと効率的に進められたはずだという心残りが残りました。</li>
+        <li>今後2次・3次にわたってUT/ITを複数回実施していく見込みです。今のうちに基盤を固めておくことで、以降の工程がより楽になると考えています。</li>
+      </ul>
+    </div>
+
+    <nav class="toc">
+      <a href="#s1">1. 一目で見る違い</a>
+      <a href="#s2">2. 現状の負荷</a>
+      <a href="#s3">3. CI/CDが合う理由</a>
+      <a href="#s4">4. 期待効果</a>
+      <a href="#s5">5. 変換ロジック中心の設計</a>
+      <a href="#s6">6. 次のステップ</a>
+      <a href="#s7">7. リスクと注意点</a>
+    </nav>
+
+    <section id="s1">
+      <h2><span class="num">1</span> 一目で見る違い</h2>
+
+      <div class="stat-strip">
+        <div class="stat-card">
+          <div class="label">1 Jobあたり・個人開発者のUT完了時間</div>
+          <div class="value"><span class="from">約1時間</span><span class="arrow">→</span><span class="to">約5分</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="label">UT全体のスケジュール</div>
+          <div class="value"><span class="from">1〜2週間</span><span class="arrow">→</span><span class="to">1〜2日</span></div>
+        </div>
+      </div>
+
+      <div class="compare">
+        <div class="card">
+          <span class="badge red">AS-IS · 手動UT</span>
+          <div class="mermaid">
+flowchart TD
+  A[Boxの参考資料をダウンロード] --> B[ローカル環境を構築]
+  B --> C[testcases.jsonを作成]
+  C --> D[Boxへアップロード]
+  D --> E[リーダーがinput/check SQLを作成]
+  E --> F[input SQLを実行]
+  F --> G[Glue Jobを実行]
+  G --> H[check SQLを実行]
+  H --> I{問題あり?}
+  I -->|Yes| J[コード修正後に再実行]
+  I -->|No| K[エビデンス依頼]
+  K --> L[リーダーがレポート作成]
+  style A fill:#fbf3ea,stroke:#c2822e
+  style E fill:#f6e4d0,stroke:#b45309
+  style L fill:#f6e4d0,stroke:#b45309
+          </div>
+          <p class="note">人が8ステップ以上を順に実施します。待ちと受け渡しが繰り返されます。</p>
+        </div>
+        <div class="vs">VS</div>
+        <div class="card">
+          <span class="badge green">TO-BE · CI/CD UT</span>
+          <div class="mermaid">
+flowchart TD
+  A[個人ブランチからPR作成] --> B[Actionsが変更パスを検知]
+  B --> C[該当コードのUTを自動実行]
+  C --> D{PR画面で通過?}
+  D -->|No| E[修正して再プッシュ]
+  D -->|Yes| F[レビュー後にマージ]
+  F --> G[リーダーはUTログでレポート]
+  style A fill:#eef8f6,stroke:#3f9a8c
+  style C fill:#d7f0ea,stroke:#0f766e
+  style G fill:#d7f0ea,stroke:#0f766e
+          </div>
+          <p class="note">検証はPRと同時に始まります。リーダーは結果確認と報告に集中できます。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="s2">
+      <h2><span class="num">2</span> 現状プロセスで生じる負荷</h2>
+      <div class="grid-4">
+        <div class="pain">
+          <strong>リードタイムが長い</strong>
+          <p>資料共有 → ローカル設定 → SQL作成 → 実行待ちが直列に続きます。</p>
+        </div>
+        <div class="pain">
+          <strong>ヒューマンエラー</strong>
+          <p>手動アップロード、スキーマ変更、実行順のミスが結果に混ざります。</p>
+        </div>
+        <div class="pain">
+          <strong>環境が分散</strong>
+          <p>参考資料・ローカル設定・実行環境が人ごとに違い、再現が難しくなります。</p>
+        </div>
+        <div class="pain">
+          <strong>リーダーがボトルネック</strong>
+          <p>SQL作成とレポートがリーダーに集まり、チーム全体が待ちになります。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="s3">
+      <h2><span class="num">3</span> なぜCI/CDがこの課題に合うか</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="mermaid">
+flowchart LR
+  P[コード Push / PR] --> C[CIが差分UTを実行]
+  C --> R[合否を即時表示]
+  R --> M[レビュー / マージ]
+  R --> L[ログ = レポート原紙]
+          </div>
+        </div>
+        <div class="grid-2" style="grid-template-columns:1fr; gap:12px;">
+          <div class="gain">
+            <strong>検証タイミングが前倒し</strong>
+            <p>リーダーSQLを待たず、開発者が出した時点で該当変更だけをテストします。</p>
+          </div>
+          <div class="gain">
+            <strong>同じ環境を共有</strong>
+            <p>ローカル差ではなく、CIランナー上で同じ手順を繰り返し実行します。</p>
+          </div>
+          <div class="gain">
+            <strong>報告がログから作れる</strong>
+            <p>リーダーはケースを再実行するより、結果ログを根拠にレポートを作れます。</p>
+          </div>
+        </div>
+      </div>
+      <p class="note">※ 図中の GitHub Actions は一例です。既存のGit運用に合わせて別のCIサービスに置き換えることもできます。</p>
+    </section>
+
+    <section id="s4">
+      <h2><span class="num">4</span> 期待効果</h2>
+      <div class="grid-4">
+        <div class="gain"><strong>UT/IT工数の削減</strong><p>1 Jobあたりの完了時間を<span class="highlight">約1時間 → 約5分</span>に短縮できる見込みです。</p></div>
+        <div class="gain"><strong>フィードバック高速化</strong><p>失敗をPR段階で見てすぐ直せます。</p></div>
+        <div class="gain"><strong>品質の安定</strong><p>人が落としやすいチェックを毎回同じ基準で実施します。</p></div>
+        <div class="gain"><strong>お客様対応の加速</strong><p>UT全体のスケジュールを<span class="highlight">1〜2週間 → 1〜2日</span>に圧縮できれば、修正反映の周期も短くなります。</p></div>
+      </div>
+    </section>
+
+    <section id="s5">
+      <h2><span class="num">5</span> 変換ロジックを中心に</h2>
+      <div class="card">
+        <p style="margin-top:0;">Glueスクリプトは一般に <b>Load → Transform → Save</b> の構造です。Load/SaveはDBやS3への接続、認証情報、ネットワーク環境に依存するため、CI環境でそのまま毎回検証しようとすると準備コストが高く、実行も不安定になりがちです。</p>
+        <p>一方でTransform部分は「入力DF → 出力DF」という純粋な処理として切り出せます。実際のDB接続を用意しなくても、あらかじめ用意したテストデータだけで高速かつ再現性高くテストできるため、UTの対象をTransformに絞ることでCI/CDとの相性が良くなり、テスト自体もシンプルになります。</p>
+        <div class="formula">input DF &nbsp;<span>→</span>&nbsp; transform &nbsp;<span>→</span>&nbsp; output DF</div>
+        <div class="mermaid">
+flowchart LR
+  subgraph Now["現在のスクリプト"]
+    L[Load from DB/S3] --> T[Transform] --> S[Save to DB/S3]
+  end
+  subgraph Next["UT範囲"]
+    I[input DF] --> X[transformモジュール] --> O[output DF検証]
+  end
+  T -.-> X
+        </div>
+        <p class="note">モジュール化できれば、同じ単位をつなげてIT（パイプライン）も「DF変換の連続」として簡素化できる余地があります。</p>
+      </div>
+    </section>
+
+    <section id="s6">
+      <h2><span class="num">6</span> 次のステップ</h2>
+      <div class="step">
+        <span class="step-num">1</span>
+        <div>
+          <strong>コードのモジュール化とテストコードの構築</strong>
+          <p>Glueスクリプトから Transform 部分を切り出し、input DF / output DF ベースのテストコードを整備します。</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div>
+          <strong>GitHub Actionsの構築</strong>
+          <p>PR作成時に変更のあったJobのUTを自動実行するワークフローを構築します。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="s7">
+      <h2><span class="num">7</span> リスクと注意点</h2>
+      <div class="grid-4">
+        <div class="risk">
+          <strong>Git運用の統一が必要</strong>
+          <p>全担当者がブランチベースのGit運用に対応する必要があります。</p>
+        </div>
+        <div class="risk">
+          <strong>構築期間</strong>
+          <p>環境構築には最大2週間程度かかる見込みです。</p>
+        </div>
+        <div class="risk">
+          <strong>IT検証は追加工数が必要</strong>
+          <p>実データを用いたIT向けの検証基盤を構築するには、別途工数がかかります。</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      社内向け草案 · 日本語説明資料 · GitHub Actionsは一例であり、既存Git環境に合うCIへ置き換え可能
+    </footer>
+  </div>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "neutral",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true, useMaxWidth: true }
+    });
+  </script>
+</body>
+</html>
