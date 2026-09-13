@@ -206,6 +206,34 @@
       margin-top: 28px;
       color: var(--muted);
       font-size: 13px;
+    }
+    footer .refs {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 20px 14px;
+      box-shadow: var(--shadow);
+      text-align: left;
+    }
+    footer .refs strong {
+      display: block;
+      color: var(--ink);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    footer .refs ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    footer .refs li + li { margin-top: 8px; }
+    footer .refs a {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    footer .refs a:hover { text-decoration: underline; }
+    footer .colophon {
+      margin: 14px 0 0;
       text-align: center;
     }
 
@@ -412,7 +440,20 @@ flowchart LR
     </section>
 
     <footer>
-      社内向け草案 · 日本語説明資料 · GitHub Actionsは一例であり、既存Git環境に合うCIへ置き換え可能
+      <div class="refs">
+        <strong>参考</strong>
+        <ul>
+          <li>
+            AWS公式: Glue ETLのpytestによるユニットテスト<br />
+            <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/run-unit-tests-for-python-etl-jobs-in-aws-glue-using-the-pytest-framework.html" target="_blank" rel="noopener noreferrer">https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/run-unit-tests-for-python-etl-jobs-in-aws-glue-using-the-pytest-framework.html</a>
+          </li>
+          <li>
+            サンプル実装: aws-samples/aws-glue-jobs-unit-testing<br />
+            <a href="https://github.com/aws-samples/aws-glue-jobs-unit-testing" target="_blank" rel="noopener noreferrer">https://github.com/aws-samples/aws-glue-jobs-unit-testing</a>
+          </li>
+        </ul>
+      </div>
+      <p class="colophon">社内向け草案 · 日本語説明資料 · GitHub Actionsは一例であり、既存Git環境に合うCIへ置き換え可能</p>
     </footer>
   </div>
   <script>
