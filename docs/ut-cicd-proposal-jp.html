@@ -274,7 +274,7 @@ flowchart TD
   style E fill:#f6e4d0,stroke:#b45309
   style L fill:#f6e4d0,stroke:#b45309
           </div>
-          <p class="note">人が8ステップ以上を順に実施します。待ちと受け渡しが繰り返されます。</p>
+          <p class="note">現状は人手の受け渡しが多く、待ちが発生しやすいフローです。</p>
         </div>
         <div class="vs">VS</div>
         <div class="card">
@@ -383,15 +383,15 @@ flowchart LR
       <div class="step">
         <span class="step-num">1</span>
         <div>
-          <strong>コードのモジュール化とテストコードの構築</strong>
-          <p>Glueスクリプトから Transform 部分を切り出し、input DF / output DF ベースのテストコードを整備します。</p>
+          <strong>Job 1本で Transform UTを切り出す</strong>
+          <p>Glueスクリプト1本から Transform 部分を切り出し、input DF / output DF ベースでUTできるかを確認します。</p>
         </div>
       </div>
       <div class="step">
         <span class="step-num">2</span>
         <div>
-          <strong>GitHub Actionsの構築</strong>
-          <p>PR作成時に変更のあったJobのUTを自動実行するワークフローを構築します。</p>
+          <strong>結果を見てCI導入可否を判断</strong>
+          <p>切り出した結果を見て、CI導入の可否と範囲を判断します。</p>
         </div>
       </div>
     </section>
@@ -400,8 +400,8 @@ flowchart LR
       <h2><span class="num">7</span> リスクと注意点</h2>
       <div class="grid-4">
         <div class="risk">
-          <strong>Git運用の統一が必要</strong>
-          <p>全担当者がブランチベースのGit運用に対応する必要があります。</p>
+          <strong>ブランチ運用の前提</strong>
+          <p>ブランチ運用を揃えることが前提になります。</p>
         </div>
         <div class="risk">
           <strong>構築期間</strong>
