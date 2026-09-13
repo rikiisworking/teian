@@ -392,15 +392,15 @@ flowchart LR
       <div class="step">
         <span class="step-num">1</span>
         <div>
-          <strong>Job 1本で Transform UTを切り出す</strong>
-          <p>Glueスクリプト1本から Transform 部分を切り出し、input DF / output DF ベースでUTできるかを確認します。</p>
+          <strong>コードのモジュール化とテストコードの構築</strong>
+          <p>Glueスクリプトから Transform 部分を切り出し、input DF / output DF ベースのテストコードを整備します。</p>
         </div>
       </div>
       <div class="step">
         <span class="step-num">2</span>
         <div>
-          <strong>結果を見てCI導入可否を判断</strong>
-          <p>切り出した結果を見て、CI導入の可否と範囲を判断します。</p>
+          <strong>GitHub Actionsの構築</strong>
+          <p>PR作成時に変更のあったJobのUTを自動実行するワークフローを構築します。</p>
         </div>
       </div>
     </section>

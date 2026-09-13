@@ -392,15 +392,15 @@ flowchart LR
       <div class="step">
         <span class="step-num">1</span>
         <div>
-          <strong>Job 1건으로 Transform UT를 분리한다</strong>
-          <p>Glue 스크립트 1건에서 Transform 부분을 분리하고, input DF / output DF 기반으로 UT할 수 있는지 확인합니다.</p>
+          <strong>코드 모듈화 및 테스트 코드 구축</strong>
+          <p>Glue 스크립트에서 Transform 부분을 분리하고, input DF / output DF 기반의 테스트 코드를 정비합니다.</p>
         </div>
       </div>
       <div class="step">
         <span class="step-num">2</span>
         <div>
-          <strong>결과를 보고 CI 도입 여부를 판단한다</strong>
-          <p>분리한 결과를 보고, CI 도입 여부와 범위를 판단합니다.</p>
+          <strong>GitHub Actions 구축</strong>
+          <p>PR 생성 시 변경된 Job의 UT를 자동으로 실행하는 워크플로우를 구축합니다.</p>
         </div>
       </div>
     </section>
