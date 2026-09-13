@@ -279,15 +279,14 @@ flowchart TD
           <span class="badge green">TO-BE · CI/CD UT</span>
           <div class="mermaid">
 flowchart TD
-  A[개인 브랜치에서 PR 생성] --> B[Actions가 변경 경로 감지]
-  B --> C[해당 코드의 UT 자동 실행]
-  C --> D{PR 화면에서 통과?}
-  D -->|No| E[수정 후 재푸시]
-  D -->|Yes| F[리뷰 후 머지]
-  F --> G[리더는 UT 로그로 리포트 작성]
+  A[개인 브랜치에서 PR 생성] --> B[해당 코드의 UT 자동 실행]
+  B --> C{PR 화면에서 통과?}
+  C -->|No| D[수정 후 재푸시]
+  C -->|Yes| E[리뷰 후 머지]
+  E --> F[리더는 UT 로그로 리포트 작성]
   style A fill:#eef8f6,stroke:#3f9a8c
-  style C fill:#d7f0ea,stroke:#0f766e
-  style G fill:#d7f0ea,stroke:#0f766e
+  style B fill:#d7f0ea,stroke:#0f766e
+  style F fill:#d7f0ea,stroke:#0f766e
           </div>
           <p class="note">검증은 PR과 동시에 시작됩니다. 리더는 결과 확인과 보고에 집중할 수 있습니다.</p>
         </div>

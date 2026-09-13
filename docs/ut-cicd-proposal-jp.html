@@ -279,15 +279,14 @@ flowchart TD
           <span class="badge green">TO-BE · CI/CD UT</span>
           <div class="mermaid">
 flowchart TD
-  A[個人ブランチからPR作成] --> B[Actionsが変更パスを検知]
-  B --> C[該当コードのUTを自動実行]
-  C --> D{PR画面で通過?}
-  D -->|No| E[修正して再プッシュ]
-  D -->|Yes| F[レビュー後にマージ]
-  F --> G[リーダーはUTログでレポート]
+  A[個人ブランチからPR作成] --> B[該当コードのUTを自動実行]
+  B --> C{PR画面で通過?}
+  C -->|No| D[修正して再プッシュ]
+  C -->|Yes| E[レビュー後にマージ]
+  E --> F[リーダーはUTログでレポート]
   style A fill:#eef8f6,stroke:#3f9a8c
-  style C fill:#d7f0ea,stroke:#0f766e
-  style G fill:#d7f0ea,stroke:#0f766e
+  style B fill:#d7f0ea,stroke:#0f766e
+  style F fill:#d7f0ea,stroke:#0f766e
           </div>
           <p class="note">検証はPRと同時に始まります。リーダーは結果確認と報告に集中できます。</p>
         </div>
