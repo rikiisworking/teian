@@ -237,14 +237,13 @@
     <div class="context">
       <strong>なぜ今、この提案か</strong>
       <ul>
-        <li>今回のUTスケジュールのために週末作業を行う中で、もっと効率的に進められたはずだという心残りが残りました。</li>
         <li>今後2次・3次にわたってUT/ITを複数回実施していく見込みです。今のうちに基盤を固めておくことで、以降の工程がより楽になると考えています。</li>
       </ul>
     </div>
 
     <nav class="toc">
       <a href="#s1">1. 一目で見る違い</a>
-      <a href="#s2">2. 現状の負荷</a>
+      <a href="#s2">2. 現状フローで発生しやすいコスト</a>
       <a href="#s3">3. CI/CDが合う理由</a>
       <a href="#s4">4. 期待効果</a>
       <a href="#s5">5. 変換ロジック中心の設計</a>
@@ -254,17 +253,6 @@
 
     <section id="s1">
       <h2><span class="num">1</span> 一目で見る違い</h2>
-
-      <div class="stat-strip">
-        <div class="stat-card">
-          <div class="label">1 Jobあたり・個人開発者のUT完了時間</div>
-          <div class="value"><span class="from">約1時間</span><span class="arrow">→</span><span class="to">約5分</span></div>
-        </div>
-        <div class="stat-card">
-          <div class="label">UT全体のスケジュール</div>
-          <div class="value"><span class="from">1〜2週間</span><span class="arrow">→</span><span class="to">1〜2日</span></div>
-        </div>
-      </div>
 
       <div class="compare">
         <div class="card">
@@ -309,7 +297,7 @@ flowchart TD
     </section>
 
     <section id="s2">
-      <h2><span class="num">2</span> 現状プロセスで生じる負荷</h2>
+      <h2><span class="num">2</span> 現状フローで発生しやすいコスト</h2>
       <div class="grid-4">
         <div class="pain">
           <strong>リードタイムが長い</strong>
@@ -324,8 +312,8 @@ flowchart TD
           <p>参考資料・ローカル設定・実行環境が人ごとに違い、再現が難しくなります。</p>
         </div>
         <div class="pain">
-          <strong>リーダーがボトルネック</strong>
-          <p>SQL作成とレポートがリーダーに集まり、チーム全体が待ちになります。</p>
+          <strong>確認作業が特定の工程に集中しやすい</strong>
+          <p>SQL作成とレポート確認が特定の工程に集まり、前後の作業が待ちになりやすくなります。</p>
         </div>
       </div>
     </section>
@@ -363,10 +351,10 @@ flowchart LR
     <section id="s4">
       <h2><span class="num">4</span> 期待効果</h2>
       <div class="grid-4">
-        <div class="gain"><strong>UT/IT工数の削減</strong><p>1 Jobあたりの完了時間を<span class="highlight">約1時間 → 約5分</span>に短縮できる見込みです。</p></div>
+        <div class="gain"><strong>UT/IT工数の削減</strong><p>人がつなぐ待ちと受け渡しを減らし、同じ検証を繰り返し実行しやすくします。</p></div>
         <div class="gain"><strong>フィードバック高速化</strong><p>失敗をPR段階で見てすぐ直せます。</p></div>
         <div class="gain"><strong>品質の安定</strong><p>人が落としやすいチェックを毎回同じ基準で実施します。</p></div>
-        <div class="gain"><strong>お客様対応の加速</strong><p>UT全体のスケジュールを<span class="highlight">1〜2週間 → 1〜2日</span>に圧縮できれば、修正反映の周期も短くなります。</p></div>
+        <div class="gain"><strong>お客様対応の加速</strong><p>修正反映の周期が短くなれば、お客様へのフィードバックも速くなります。</p></div>
       </div>
     </section>
 

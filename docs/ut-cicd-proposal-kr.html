@@ -237,14 +237,13 @@
     <div class="context">
       <strong>왜 지금 이 제안인가</strong>
       <ul>
-        <li>이번 UT 일정을 맞추기 위해 주말 작업을 하면서, 더 효율적으로 진행할 수 있었을 것 같다는 아쉬움이 남았습니다.</li>
         <li>앞으로 2차, 3차에 걸쳐 UT/IT를 여러 차례 더 진행할 예정입니다. 지금 기반을 탄탄히 다져두면 이후 과정이 훨씬 수월해질 것이라고 생각합니다.</li>
       </ul>
     </div>
 
     <nav class="toc">
       <a href="#s1">1. 한눈에 보는 차이</a>
-      <a href="#s2">2. 현재 프로세스의 부담</a>
+      <a href="#s2">2. 현재 플로우에서 발생하기 쉬운 비용</a>
       <a href="#s3">3. CI/CD가 맞는 이유</a>
       <a href="#s4">4. 기대 효과</a>
       <a href="#s5">5. 변환 로직 중심 설계</a>
@@ -254,17 +253,6 @@
 
     <section id="s1">
       <h2><span class="num">1</span> 한눈에 보는 차이</h2>
-
-      <div class="stat-strip">
-        <div class="stat-card">
-          <div class="label">Job 1건당 · 개발자 개인 UT 완료 시간</div>
-          <div class="value"><span class="from">약 1시간</span><span class="arrow">→</span><span class="to">약 5분</span></div>
-        </div>
-        <div class="stat-card">
-          <div class="label">UT 전체 소요 일정</div>
-          <div class="value"><span class="from">1~2주</span><span class="arrow">→</span><span class="to">1~2일</span></div>
-        </div>
-      </div>
 
       <div class="compare">
         <div class="card">
@@ -309,7 +297,7 @@ flowchart TD
     </section>
 
     <section id="s2">
-      <h2><span class="num">2</span> 현재 프로세스에서 발생하는 부담</h2>
+      <h2><span class="num">2</span> 현재 플로우에서 발생하기 쉬운 비용</h2>
       <div class="grid-4">
         <div class="pain">
           <strong>긴 리드타임</strong>
@@ -324,8 +312,8 @@ flowchart TD
           <p>참고 자료·로컬 설정·실행 환경이 사람마다 달라 재현이 어렵습니다.</p>
         </div>
         <div class="pain">
-          <strong>리더 병목</strong>
-          <p>SQL 작성과 리포트가 리더에게 몰려 팀 전체가 대기하게 됩니다.</p>
+          <strong>확인 작업이 특정 공정에 몰리기 쉬움</strong>
+          <p>SQL 작성과 리포트 확인이 특정 공정에 모여, 전후 작업이 대기하기 쉬워집니다.</p>
         </div>
       </div>
     </section>
@@ -363,10 +351,10 @@ flowchart LR
     <section id="s4">
       <h2><span class="num">4</span> 기대 효과</h2>
       <div class="grid-4">
-        <div class="gain"><strong>UT/IT 공수 절감</strong><p>Job 1건당 완료 시간을 <span class="highlight">약 1시간 → 약 5분</span>으로 줄일 수 있을 것으로 예상됩니다.</p></div>
+        <div class="gain"><strong>UT/IT 공수 절감</strong><p>사람이 이어주는 대기와 인수인계를 줄이고, 같은 검증을 반복 실행하기 쉽게 합니다.</p></div>
         <div class="gain"><strong>피드백 속도 향상</strong><p>실패를 PR 단계에서 바로 확인하고 수정할 수 있습니다.</p></div>
         <div class="gain"><strong>품질 안정화</strong><p>사람이 놓치기 쉬운 체크 항목을 매번 동일한 기준으로 수행합니다.</p></div>
-        <div class="gain"><strong>고객 대응 가속화</strong><p>UT 전체 일정을 <span class="highlight">1~2주 → 1~2일</span>로 압축하면 수정 반영 주기도 짧아집니다.</p></div>
+        <div class="gain"><strong>고객 대응 가속화</strong><p>수정 반영 주기가 짧아지면 고객 피드백도 빨라집니다.</p></div>
       </div>
     </section>
 
