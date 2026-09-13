@@ -206,36 +206,20 @@
       margin-top: 28px;
       color: var(--muted);
       font-size: 13px;
-    }
-    footer .refs {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px 20px 14px;
-      box-shadow: var(--shadow);
-      text-align: left;
-    }
-    footer .refs strong {
-      display: block;
-      color: var(--ink);
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-    footer .refs ul {
-      margin: 0;
-      padding-left: 18px;
-    }
-    footer .refs li + li { margin-top: 8px; }
-    footer .refs a {
-      color: var(--accent);
-      text-decoration: none;
-      word-break: break-all;
-    }
-    footer .refs a:hover { text-decoration: underline; }
-    footer .colophon {
-      margin: 14px 0 0;
       text-align: center;
     }
+    footer .colophon { margin: 0; }
+    footer .refs {
+      margin: 8px 0 0;
+      font-size: 12px;
+      opacity: .72;
+      line-height: 1.7;
+    }
+    footer .refs a {
+      color: inherit;
+      text-decoration: none;
+    }
+    footer .refs a:hover { text-decoration: underline; }
 
     @media (max-width: 1100px) {
       .grid-4 { grid-template-columns: 1fr 1fr; }
@@ -440,20 +424,12 @@ flowchart LR
     </section>
 
     <footer>
-      <div class="refs">
-        <strong>참고</strong>
-        <ul>
-          <li>
-            AWS 공식: Glue ETL의 pytest 유닛 테스트<br />
-            <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/run-unit-tests-for-python-etl-jobs-in-aws-glue-using-the-pytest-framework.html" target="_blank" rel="noopener noreferrer">https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/run-unit-tests-for-python-etl-jobs-in-aws-glue-using-the-pytest-framework.html</a>
-          </li>
-          <li>
-            샘플 구현: aws-samples/aws-glue-jobs-unit-testing<br />
-            <a href="https://github.com/aws-samples/aws-glue-jobs-unit-testing" target="_blank" rel="noopener noreferrer">https://github.com/aws-samples/aws-glue-jobs-unit-testing</a>
-          </li>
-        </ul>
-      </div>
       <p class="colophon">사내 검토용 초안 · 한국어 설명 자료 · GitHub Actions는 하나의 예시이며 기존 Git 환경에 맞는 CI로 대체 가능</p>
+      <p class="refs">참고:
+        <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/run-unit-tests-for-python-etl-jobs-in-aws-glue-using-the-pytest-framework.html" target="_blank" rel="noopener noreferrer">AWS 공식 · Glue ETL의 pytest 유닛 테스트</a>
+        ·
+        <a href="https://github.com/aws-samples/aws-glue-jobs-unit-testing" target="_blank" rel="noopener noreferrer">샘플 구현 · aws-samples/aws-glue-jobs-unit-testing</a>
+      </p>
     </footer>
   </div>
   <script>
