@@ -225,7 +225,7 @@
     <header class="hero">
       <p class="meta">Ubicom Holdings · Park · UT改善提案</p>
       <h1>UTを「人がつなぐ手順」から<br>「コードを上げれば自動で回る流れ」へ</h1>
-      <p class="lead">現状のUTは、資料ダウンロードからSQL作成、Glue実行、レポートまで人手でつなぎます。CI/CDを検討すれば、同じ検証をPRの時点で自動化できます。</p>
+      <p class="lead">現状のUTは、testcases.json生成からSQL作成、Glue実行、レポートまで人手でつなぎます。CI/CDを検討すれば、同じ検証をPRの時点で自動化できます。</p>
       <div class="chips">
         <span class="chip">リードタイム短縮</span>
         <span class="chip">ヒューマンエラー低減</span>
@@ -259,20 +259,18 @@
           <span class="badge red">AS-IS · 手動UT</span>
           <div class="mermaid">
 flowchart TD
-  A[Boxの参考資料をダウンロード] --> B[ローカル環境を構築]
-  B --> C[testcases.jsonを作成]
-  C --> D[Boxへアップロード]
-  D --> E[リーダーがinput/check SQLを作成]
-  E --> F[input SQLを実行]
-  F --> G[Glue Jobを実行]
-  G --> H[check SQLを実行]
-  H --> I{問題あり?}
-  I -->|Yes| J[コード修正後に再実行]
-  I -->|No| K[エビデンス依頼]
-  K --> L[リーダーがレポート作成]
+  A[testcases.json生成] --> B[Boxへアップロード]
+  B --> C[リーダーがinput/check SQLを作成]
+  C --> D[input SQLを実行]
+  D --> E[Glue Jobを実行]
+  E --> F[check SQLを実行]
+  F --> G{問題あり?}
+  G -->|Yes| H[コード修正後に再実行]
+  G -->|No| I[エビデンス依頼]
+  I --> J[リーダーがレポート作成]
   style A fill:#fbf3ea,stroke:#c2822e
-  style E fill:#f6e4d0,stroke:#b45309
-  style L fill:#f6e4d0,stroke:#b45309
+  style C fill:#f6e4d0,stroke:#b45309
+  style J fill:#f6e4d0,stroke:#b45309
           </div>
           <p class="note">現状は人手の受け渡しが多く、待ちが発生しやすいフローです。</p>
         </div>
@@ -301,7 +299,7 @@ flowchart TD
       <div class="grid-4">
         <div class="pain">
           <strong>リードタイムが長い</strong>
-          <p>資料共有 → ローカル設定 → SQL作成 → 実行待ちが直列に続きます。</p>
+          <p>testcases.json生成 → アップロード → SQL作成 → 実行待ちが直列に続きます。</p>
         </div>
         <div class="pain">
           <strong>ヒューマンエラー</strong>

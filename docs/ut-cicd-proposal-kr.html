@@ -225,7 +225,7 @@
     <header class="hero">
       <p class="meta">Ubicom Holdings · Park · UT 개선 제안</p>
       <h1>UT를 "사람이 이어주는 절차"에서<br>"코드를 올리면 자동으로 돌아가는 흐름"으로</h1>
-      <p class="lead">현재 UT는 자료 다운로드부터 SQL 작성, Glue 실행, 리포트 작성까지 모두 사람이 수작업으로 연결하고 있습니다. CI/CD를 도입하면 동일한 검증을 PR 시점에 자동화할 수 있습니다.</p>
+      <p class="lead">현재 UT는 testcases.json 생성부터 SQL 작성, Glue 실행, 리포트 작성까지 사람이 수작업으로 연결하고 있습니다. CI/CD를 도입하면 동일한 검증을 PR 시점에 자동화할 수 있습니다.</p>
       <div class="chips">
         <span class="chip">리드타임 단축</span>
         <span class="chip">휴먼에러 감소</span>
@@ -259,20 +259,18 @@
           <span class="badge red">AS-IS · 수동 UT</span>
           <div class="mermaid">
 flowchart TD
-  A[Box에서 참고 자료 다운로드] --> B[로컬 환경 구축]
-  B --> C[testcases.json 작성]
-  C --> D[Box에 업로드]
-  D --> E[리더가 input/check SQL 작성]
-  E --> F[input SQL 실행]
-  F --> G[Glue Job 실행]
-  G --> H[check SQL 실행]
-  H --> I{문제 있음?}
-  I -->|Yes| J[코드 수정 후 재실행]
-  I -->|No| K[증적 요청]
-  K --> L[리더가 리포트 작성]
+  A[testcases.json 생성] --> B[Box에 업로드]
+  B --> C[리더가 input/check SQL 작성]
+  C --> D[input SQL 실행]
+  D --> E[Glue Job 실행]
+  E --> F[check SQL 실행]
+  F --> G{문제 있음?}
+  G -->|Yes| H[코드 수정 후 재실행]
+  G -->|No| I[증적 요청]
+  I --> J[리더가 리포트 작성]
   style A fill:#fbf3ea,stroke:#c2822e
-  style E fill:#f6e4d0,stroke:#b45309
-  style L fill:#f6e4d0,stroke:#b45309
+  style C fill:#f6e4d0,stroke:#b45309
+  style J fill:#f6e4d0,stroke:#b45309
           </div>
           <p class="note">현재는 사람 손의 인수인계가 많아, 대기가 발생하기 쉬운 플로우입니다.</p>
         </div>
@@ -301,7 +299,7 @@ flowchart TD
       <div class="grid-4">
         <div class="pain">
           <strong>긴 리드타임</strong>
-          <p>자료 공유 → 로컬 설정 → SQL 작성 → 실행 대기가 직렬로 이어집니다.</p>
+          <p>testcases.json 생성 → 업로드 → SQL 작성 → 실행 대기가 직렬로 이어집니다.</p>
         </div>
         <div class="pain">
           <strong>휴먼에러</strong>
